@@ -1,0 +1,12 @@
+os: linux
+language: node_js
+node_js:
+  - "8"
+install: npm install
+test: npm run test
+notifications:
+  email:
+    recipients:
+      - light0x00@163.com
+    on_success: change
+    on_failure: always

@@ -1,0 +1,14 @@
+{
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"files.associations": {
+		"tslint.json": "jsonc"
+	},
+	"eslint.validate": [
+		"javascript",
+		"typescript",
+		// {
+		// 	"language": "typescript",
+		// 	"autoFix": true
+		// },
+	],
+}

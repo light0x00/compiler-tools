@@ -1,0 +1,44 @@
+{
+	"name": "compiler-tools",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"scripts": {
+		"lint": "eslint src/*.ts test/*.ts",
+		"lint:fix": "npm run lint -- --fix",
+		"test": "cross-env DEBUG=APP:* npx mocha --require ts-node/register --require module-alias/register --file test/*"
+	},
+	"_moduleAliases": {
+		"@": "src",
+		"test": "test"
+	},
+	"pre-commit": [
+		"echo 'pre-commit'"
+	],
+	"dependencies": {
+		"debug": "^4.1.1",
+		"lodash": "^4.17.15",
+		"module-alias": "^2.2.2"
+	},
+	"devDependencies": {
+		"@types/debug": "^4.1.5",
+		"@types/lodash": "^4.14.144",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.11.6",
+		"@typescript-eslint/eslint-plugin": "^2.9.0",
+		"@typescript-eslint/parser": "^2.9.0",
+		"cross-env": "^6.0.3",
+		"eslint": "^6.7.1",
+		"eslint-config-prettier": "^6.7.0",
+		"eslint-plugin-prettier": "^3.1.1",
+		"mocha": "^6.2.2",
+		"pre-commit": "^1.2.2",
+		"prettier": "^1.19.1",
+		"should": "^13.2.3",
+		"ts-node": "^8.4.1",
+		"typescript": "^3.7.2"
+	}
+}
