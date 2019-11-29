@@ -1,5 +1,5 @@
-import { add } from "lodash";
 import "should";
+import { add } from "../src/index";
 
 describe("============LR Parser Test============", function () {
 	it(`is expected`, function () {

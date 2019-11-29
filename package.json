@@ -9,11 +9,12 @@
 	"scripts": {
 		"lint": "eslint src/*.ts test/*.ts",
 		"lint:fix": "npm run lint -- --fix",
-		"test": "cross-env DEBUG=APP:* npx mocha --require ts-node/register --require module-alias/register --file test/*"
+		"pretest": "tsc -p .",
+		"test": "cross-env DEBUG=APP:* node_modules/.bin/mocha --require module-alias/register --file dist/test/*.js"
 	},
 	"_moduleAliases": {
-		"@": "src",
-		"test": "test"
+		"@": "dist/src",
+		"test": "dist/test"
 	},
 	"pre-commit": [
 		"echo 'pre-commit'"
@@ -24,21 +25,25 @@
 		"module-alias": "^2.2.2"
 	},
 	"devDependencies": {
+		"@istanbuljs/nyc-config-typescript": "^0.1.3",
 		"@types/debug": "^4.1.5",
 		"@types/lodash": "^4.14.144",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.11.6",
 		"@typescript-eslint/eslint-plugin": "^2.9.0",
 		"@typescript-eslint/parser": "^2.9.0",
+		"codecov": "^3.6.1",
 		"cross-env": "^6.0.3",
 		"eslint": "^6.7.1",
 		"eslint-config-prettier": "^6.7.0",
 		"eslint-plugin-prettier": "^3.1.1",
 		"mocha": "^6.2.2",
+		"nyc": "^14.1.1",
 		"pre-commit": "^1.2.2",
 		"prettier": "^1.19.1",
 		"should": "^13.2.3",
 		"ts-node": "^8.4.1",
+		"tsconfig-paths": "^3.9.0",
 		"typescript": "^3.7.2"
 	}
 }
