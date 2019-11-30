@@ -7,5 +7,5 @@ root = true
 charset = utf-8
 end_of_line = lf
 indent_style = tab
-insert_final_newline = true #  set to true to ensure file ends with a newline when saving and false to ensure it doesn't.
+# insert_final_newline = true #  set to true to ensure file ends with a newline when saving and false to ensure it doesn't.
 trim_trailing_whitespace = true

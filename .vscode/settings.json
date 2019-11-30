@@ -1,7 +1,7 @@
 {
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"files.associations": {
-		"tslint.json": "jsonc"
+		"eslint.json": "jsonc"
 	},
 	"eslint.validate": [
 		"javascript",

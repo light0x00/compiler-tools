@@ -1,0 +1,32 @@
+{
+	"env": {},
+	"presets": [
+		//https://babeljs.io/docs/en/next/babel-preset-env.html
+		[
+			"@babel/env",
+			{
+				"targets": {
+					"node": "current"
+				},
+				"spec": false,
+				"modules": "commonjs",
+				"debug": false
+			}
+		],
+		//https://www.babeljs.cn/docs/babel-preset-typescript
+		[
+			"@babel/preset-typescript",
+			{
+				"isTSX": false
+			}
+		]
+	],
+	"plugins": [
+		"@babel/plugin-proposal-numeric-separator",
+		"@babel/proposal-class-properties",
+		"@babel/proposal-object-rest-spread",
+		"@babel/plugin-proposal-optional-chaining",
+		"@babel/plugin-transform-named-capturing-groups-regex"
+	],
+	"sourceMaps": "inline"
+}

@@ -1,50 +1,75 @@
 {
-    // 使用 IntelliSense 了解相关属性。
-    // 悬停以查看现有属性的描述。
-    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Run TS",
-            "args": [
-                "${file}"
-            ],
-            "runtimeArgs": [
-                "-r",
-                "ts-node/register",
-                "-r",
-                "tsconfig-paths/register",
-            ],
-            "protocol": "inspector",
-            "cwd": "${workspaceFolder}/",
-            "env": {
-                "DEBUG": "*"
-            },
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Run Mocha",
-            "type": "node",
-            "request": "launch",
-            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "stopOnEntry": false,
-            "args": [
-                "${file}",
-                "--no-timeouts"
-            ],
-            "cwd": "${workspaceFolder}",
-            "runtimeArgs": [
-                "-r",
-                "ts-node/register",
-                "-r",
-                "tsconfig-paths/register"
-            ],
-            "env": {
-                "DEBUG": "APP:*"
-            },
-            "console": "integratedTerminal"
-        },
-    ]
+	// 使用 IntelliSense 了解相关属性。
+	// 悬停以查看现有属性的描述。
+	// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug",
+			"program": "${file}",
+			"sourceMaps": true,
+			"outFiles": [
+				"${workspaceFolder}/dist/**/*.js",
+			],
+			"runtimeArgs": [
+				/* 使用特性 RegExp Named Capture Groups */
+				"--harmony",
+				"-r",
+				"module-alias/register", /* 实际上运行的编译后的文件(dist) */
+				"-r",
+				"mocha",
+			],
+			"env": {
+				"DEBUG": "APP:*",
+			},
+			"console": "integratedTerminal",
+			"protocol": "inspector",
+		},
+		/* ts-node使用tsc编译,无法将一些新的es特性适配到低版本node,因此需要借助babel */
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "DEBUG-TS",
+			"program": "${workspaceFolder}/node_modules/.bin/ts-node",
+			"args": [
+				"${file}",
+			],
+			"runtimeArgs": [
+				"--harmony",
+				"-r",
+				"tsconfig-paths/register",
+				"-r",
+				"mocha",
+			],
+			"env": {
+				"DEBUG": "APP:*",
+			},
+			"console": "integratedTerminal",
+			"protocol": "inspector",
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "DEBUG-MOCHA",
+			"program": "${workspaceFolder}/node_modules/.bin/mocha",
+			"args": [
+				"${file}",
+				"--no-timeouts"
+			],
+			"runtimeArgs": [
+				"--harmony",
+				"-r",
+				"ts-node/register",
+				"-r",
+				"tsconfig-paths/register",
+			],
+			"env": {
+				"DEBUG": "APP:*",
+			},
+			"console": "integratedTerminal",
+			"protocol": "inspector",
+		},
+	]
 }
