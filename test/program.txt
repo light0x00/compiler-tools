@@ -1,0 +1,10 @@
+var str="\"\\哈\n哈\t哈\""
+var a = 123;
+var i = 0; //This is a line of comments
+while(a>100){
+    if(i>10){
+        break;
+    }else{
+        i++
+	}
+}
