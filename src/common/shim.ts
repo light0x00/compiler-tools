@@ -1,11 +1,48 @@
-export class Stack<T> extends Array<T>{
-	/* push/pop/peek */
+/* Vanilla JS api is shit */
+export class Stack<T> implements Iterable<T>{
+	*[Symbol.iterator](): Iterator<T, any, undefined> {
+		for(let e of this.arr){
+			yield e;
+		}
+	}
+	private arr: Array<T>;
+	constructor(...items: T[]) {
+		this.arr = new Array<T>(...items);
+	}
 	peek(): T {
-		return this[this.length - 1];
+		return this.arr[this.arr.length - 1];
+	}
+	push(...t: T[]) {
+		this.arr.push(...t);
+	}
+	pop() {
+		return this.arr.pop();
+	}
+	batchPop(i: number) {
+		assert(i > 0 && i <= this.arr.length);
+		let result = [];
+		for (; i > 0; i--) {
+			result.push(this.pop());
+		}
+		return result;
+	}
+	size() {
+		return this.arr.length;
 	}
 }
 
-export class Queue<T> {
+export class Queue<T> implements Iterable<T>{
+	[Symbol.iterator](): Iterator<T, any, undefined> {
+		let i = 0;
+		let arr = this.arr;
+		return {
+			next: function () {
+				return i < arr.length ?
+					{ value: arr[i++], done: false } :
+					{ value: null, done: true };
+			}
+		};
+	}
 	private arr: Array<T>
 	constructor(...items: T[]) {
 		this.arr = new Array<T>(...items);
@@ -37,7 +74,6 @@ export class Queue<T> {
 	}
 }
 
-
 export function addAll_Map(to: Map<any, any>, from: Map<any, any>) {
 	for (let [k, v] of from)
 		to.set(k, v);
@@ -50,9 +86,8 @@ export function addAll_Set(to: Set<any>, from: Set<any>) {
 	return to;
 }
 export function isIterable(obj: any): obj is Iterable<any> {
-	if (obj == null) {
+	if (obj == null)
 		return false;
-	}
 	return typeof obj[Symbol.iterator] === "function";
 }
 
@@ -62,20 +97,3 @@ export function assert(condition: boolean, msg?: string): asserts condition {
 	}
 }
 
-export class MismatchError extends Error {
-	constructor(expected: Object, actual: Object) {
-		let err_msg;
-		if (isIterable(expected)) {
-			let expectation = "";
-			for (let e of expected) {
-				expectation += e + ",";
-			}
-			expectation = expectation.replace(/,$/, "");
-			err_msg = `The expected input is one of ${expectation},but actually ${actual}`;
-		}
-		else {
-			err_msg = `The expected input is ${expected},but actually ${actual}`;
-		}
-		super(err_msg);
-	}
-}

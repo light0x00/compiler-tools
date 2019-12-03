@@ -1,6 +1,6 @@
 import should from "should";
-import { RegexpTokenizer } from "@/tokenzier";
-import { EOF } from "@/definition";
+import { RegexpTokenizer } from "@/parser/tokenzier";
+import { EOF } from "@/common/definition";
 import { getMock } from "./common/toolkit";
 import path from "path";
 import rootDebug from "debug";

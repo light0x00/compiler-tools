@@ -7,7 +7,7 @@
 	"author": "",
 	"license": "MIT",
 	"scripts": {
-		"lint": "eslint src/*.ts test/*.ts",
+		"lint": "eslint src/**/*.ts test/**/*.ts",
 		"lint:fix": "npm run lint -- --fix",
 		"type-check": "tsc --noEmit",
 		"type-check:watch": "npm run type-check -- --watch",

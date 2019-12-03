@@ -1,4 +1,5 @@
-import { Token, Word, EOF, ILexer, Num, Tag, Single } from "../definition";
+import { IToken, EOF, ILexer } from "../common/definition";
+import { Word, Num, Tag, Single } from "./definition";
 import rootDebug from "debug";
 import { Queue, assert } from "../common/shim";
 import { cloneDeep } from "lodash";
@@ -39,22 +40,22 @@ export class RegexpTokenizer implements ILexer {
 		this.reservedWords.set(reserve.lexeme, reserve);
 	}
 
-	private buffer = new Queue<Token>();
+	private buffer = new Queue<IToken>();
 	peek() {
 		return this.peekFor(0);
 	}
 
-	peekFor(i: number): Token {
+	peekFor(i: number): IToken {
 		if (this.fill(i)) {
-			return this.buffer.get(i) as Token;
+			return this.buffer.get(i) as IToken;
 		} else {
 			return EOF;
 		}
 	}
 
-	nextToken(): Token {
+	nextToken(): IToken {
 		if (this.fill(0))
-			return this.buffer.removeFirst() as Token;
+			return this.buffer.removeFirst() as IToken;
 		else
 			return EOF;
 	}

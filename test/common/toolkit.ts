@@ -1,21 +1,22 @@
-import { EOF, ILexer, Token, Word, Tag } from "@/definition";
+import { EOF, ILexer, IToken } from "@/common/definition";
+import { Word, Tag } from "@/parser/definition";
 import fs from "fs";
 
 export class MockLexer implements ILexer {
 
-	tokens: Array<Token> = [];
+	tokens: Array<IToken> = [];
 	position = 0;
-	constructor(tokens: Array<Token>) {
+	constructor(tokens: Array<IToken>) {
 		this.tokens = tokens;
 	}
 
-	peek(): Token {
+	peek(): IToken {
 		if (this.position >= this.tokens.length)
 			return EOF;
 		return this.tokens[this.position];
 	}
 
-	nextToken(): Token {
+	nextToken(): IToken {
 		if (this.position >= this.tokens.length)
 			return EOF;
 		return this.tokens[this.position++];
