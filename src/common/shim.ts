@@ -1,7 +1,12 @@
 /* Vanilla JS api is shit */
+
+export interface IFunction<I, R> {
+	(i: I): R
+}
+
 export class Stack<T> implements Iterable<T>{
 	*[Symbol.iterator](): Iterator<T, any, undefined> {
-		for(let e of this.arr){
+		for (let e of this.arr) {
 			yield e;
 		}
 	}
@@ -29,6 +34,10 @@ export class Stack<T> implements Iterable<T>{
 	size() {
 		return this.arr.length;
 	}
+	join(separator?: string): string {
+		return this.arr.join(separator);
+	}
+	
 }
 
 export class Queue<T> implements Iterable<T>{
@@ -96,4 +105,3 @@ export function assert(condition: boolean, msg?: string): asserts condition {
 		throw new Error(`Assert Error: ${msg}`);
 	}
 }
-

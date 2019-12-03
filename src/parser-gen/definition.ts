@@ -1,6 +1,8 @@
 import { assert } from "../common/shim";
 import { ASTMaker, NIL, ILexer } from "../common/definition";
+import _ from "lodash";
 
+// export type Terminal = string | Tag | IToken;
 export type Terminal = Object;
 export type Symbol = NonTerminal | Terminal;
 export class NonTerminal extends Array<Production> {
@@ -54,7 +56,7 @@ export interface IGrammar {
 	Prods(): Production[];
 	startNT(): NonTerminal;
 }
-/* 用于测试分析表 无法生成语法树 (!!下一次迭代干掉)*/
+/* 用于测试分析表 无法用于生成语法树 (!!下一次迭代干掉)*/
 export type RawSimpleGrammar = Array<Array<NonTerminal | Symbol[]>>;
 export class SimpleGrammar implements IGrammar {
 	protected prodIdCounter = 0;
@@ -109,12 +111,12 @@ export type RawProduction = {
 	action?: ASTMaker;
 	body: Symbol[];
 };
-export type RawActionGrammar = Array<Array<NonTerminal | RawProduction>>;
+export type RawActionGrammar = Array<Array<NonTerminal | RawProduction | ASTMaker>>;
 export class ActionGrammar implements IGrammar {
 	protected prodIdCounter = 0;
-	protected non_terminals: NonTerminal[] = [];
+	protected nonTerminals: NonTerminal[] = [];
 	protected productions: Production[] = [];
-	protected prodMap = new Map<number, Production>();
+	protected productionsMap = new Map<number, Production>();
 	constructor(rawGrammar: RawActionGrammar) {
 		this.construct(rawGrammar);
 	}
@@ -126,15 +128,21 @@ export class ActionGrammar implements IGrammar {
 		//for each non-terminal
 		for (let x of rawGrammar) {
 			assert(x.length > 1 && x[0] instanceof NonTerminal);
-			let nt = x[0];
-			this.non_terminals.push(x[0]);
+			//The first one must be NonTerminal
+			let nonTerminal = x[0];
+			this.nonTerminals.push(nonTerminal);
+			//The last one could be ASTMaker
+			let hasDefault = _.isFunction(x[x.length - 1]);
 			//for each production in non-terminal
-			for (let i = 1; i < x.length; i++) {
+			for (let i = 1; i < (hasDefault ? x.length - 1 : x.length); i++) {
 				let rawProd = x[i] as RawProduction;
-				assert(rawProd != null && rawProd.body != null);
-				let prod = new Production(this.prodIdCounter++, nt, rawProd.body, rawProd.action);
-				nt.prods.push(prod);
-				this.prodMap.set(prod.id, prod);
+				assert(x[i] != null && rawProd.body != null);
+				let { body, action } = rawProd;
+				if (action == null && hasDefault)
+					action = x[x.length - 1] as ASTMaker;
+				let prod = new Production(this.prodIdCounter++, nonTerminal, body, action);
+				nonTerminal.prods.push(prod);
+				this.productionsMap.set(prod.id, prod);
 				this.productions.push(prod);
 			}
 		}
@@ -147,15 +155,19 @@ export class ActionGrammar implements IGrammar {
 		return this.productions.join("\n");
 	}
 	NTS() {
-		return this.non_terminals;
+		return this.nonTerminals;
 	}
 	Prods() {
 		if (this.productions == null)
-			this.productions = Array.from(this.prodMap.values());
+			this.productions = Array.from(this.productionsMap.values());
 		return this.productions;
 	}
 	//start symbol
 	startNT() {
-		return this.non_terminals[0];
+		return this.nonTerminals[0];
 	}
+}
+
+export class GrammarError extends Error {
+
 }

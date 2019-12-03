@@ -1,7 +1,7 @@
 
 import rootDebug from "debug";
 import { NIL } from "@/common/definition";
-import { Terminal, Production, NonTerminal, Symbol, IGrammar } from "@/parser-generator/definition";
+import { Terminal, Production, NonTerminal, Symbol, IGrammar } from "@/parser-gen/definition";
 import { CyclicDepsDector } from "./toolkit";
 let debug = rootDebug("APP:first");
 

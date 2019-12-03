@@ -1,6 +1,6 @@
-import { buildLLParser } from "@/parser-generator/LL.parser";
+import { buildLLParser } from "@/parser-gen/LL/LL.parser";
 import { NIL, ASTList } from "@/common/definition";
-import { NonTerminal, ActionGrammar } from "@/parser-generator/definition";
+import { NonTerminal, ActionGrammar } from "@/parser-gen/definition";
 import { Tag, Num, Single, Token } from "@/parser/definition";
 import { RegexpTokenizer } from "@/parser/tokenzier";
 import debug from "debug";
@@ -11,9 +11,9 @@ debug.enable("APP:LLParser");
 describe("============LL Parser Test============", function () {
 	/*
 	E -> TE'
-	E' -> +TE'|ε
+	E' -> +TE'| -TE' |ε
 	T -> FT'
-	T' -> *FT'|ε
+	T' -> *FT'| /FT' |ε
 	F -> (E)|NUM
 	*/
 	class Expr extends ASTList {
@@ -48,10 +48,6 @@ describe("============LL Parser Test============", function () {
 
 	/* E2 */
 	class Expr2 extends ASTList {
-
-		eval(): Object {
-			throw new Error("Do not support the evaluate!");
-		}
 
 		operator(): string {
 			return (this.child(0) as Single).getValue() as string;
@@ -102,9 +98,6 @@ describe("============LL Parser Test============", function () {
 
 	class Term2 extends ASTList {
 
-		eval(): Object {
-			throw new Error("Do not support the evaluate!");
-		}
 		toString() {
 			return "(" + this.children.join(" ") + ")";
 		}
@@ -172,14 +165,14 @@ describe("============LL Parser Test============", function () {
 			]
 		]);
 
+		let parser = buildLLParser(grammar);
+
 		it(`1+2*(3+4)*5/2=36`, function () {
-			let parser = buildLLParser(grammar);
 			let ast = parser.parse(new RegexpTokenizer("1+2*(3+4)*5/2"));
 			should(ast.eval()).eql(36);
 		});
 
 		it(`(1+2*(3+4)*5)/2=35.5`, function () {
-			let parser = buildLLParser(grammar);
 			let ast = parser.parse(new RegexpTokenizer("(1+2*(3+4)*5)/2"));
 			should(ast.eval()).eql(35.5);
 		});

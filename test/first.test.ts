@@ -1,8 +1,8 @@
 
 import "mocha";
 import "should";
-import { FirstSetCalculator } from "@/parser-generator/first";
-import { NonTerminal, SimpleGrammar } from "@/parser-generator/definition";
+import { FirstSetCalculator } from "@/parser-gen/first";
+import { NonTerminal, SimpleGrammar } from "@/parser-gen/definition";
 import should from "should";
 
 describe("============The calculation of first set============", function () {

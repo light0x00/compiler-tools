@@ -1,13 +1,13 @@
-import { Terminal } from "../parser-generator/definition";
-
 /* -------------------------------- Lexical Analysis Specification -------------------------------- */
 
 export interface IToken {
-	tableKey(): Terminal
+	tableKey(): Object;
 }
 
 /* special token like EOF\NIL */
 class Special implements IToken {
+	[Symbol.toStringTag]: string;
+	description: string;
 	private desc: string;
 	constructor(desc: string) {
 		this.desc = desc;
@@ -33,14 +33,15 @@ export interface ILexer {
 
 /* -------------------------------- Syntax Analysis Specification -------------------------------- */
 
+/*
+#关于分析树的构造
+对于自顶向下分析 在构造父节点时无法确定其需要的元素 因此节点需要懒初始化
+	具体的解决方案是,先new父节点(这时不传任何元素),当处理到其子节点时,再往父节点追加元素
+对于自底向上分析 由于从子节点开始构建分析树 构造每个节点所需的元素是确定的(归约句柄) 因此可以在构造AST传入元素初始化
+*/
+
 /* Used to produce abstract syntax tree during parsing */
 export interface ASTMaker {
-	/*
-	关于分析树的构造
-	对于自顶向下分析 在构造父节点时无法确定其需要的元素 因此节点需要懒初始化
-		具体的解决方案是,先new父节点(这时不传任何元素),当处理到其子节点时,再往父节点追加元素
-	对于自底向上分析 由于从子节点开始构建分析树 构造每个节点所需的元素是确定的(归约句柄) 因此可以在构造AST传入元素初始化
-	*/
 	(eles?: Array<ASTree | IToken>): ASTree;
 }
 
@@ -54,16 +55,19 @@ export type ASTElement = IToken | ASTree
 /* AST */
 export abstract class ASTree {
 	abstract appendElement(ele: ASTElement): void;
-	abstract eval(): Object;
+	eval(): Object {
+		throw new Error("Do not support the evaluate!");
+	}
 }
 export abstract class ASTList extends ASTree {
 	protected children: Array<ASTElement>
 	constructor(children?: Array<ASTElement>) {
 		super();
-		if (children == undefined)
+		if (children == null)
 			children = new Array<ASTElement>();
 		this.children = children;
 	}
+	//issue #关于分析树的构造
 	appendElement(ele: ASTElement) {
 		this.children.push(ele);
 	}
@@ -78,7 +82,8 @@ export abstract class ASTList extends ASTree {
 	}
 
 	toString() {
-		return this.children.join(" ");
+		let eleStr = this.children.join(" ");
+		return this.childrenNum > 1 ? "(" + eleStr + ")" : eleStr;
 	}
 }
 export abstract class ASTLeaf extends ASTree {

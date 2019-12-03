@@ -1,6 +1,5 @@
 import rootDebug from "debug";
 import { isIterable } from "@/common/shim";
-import { IToken } from "@/common/definition";
 let debug = rootDebug("APP:pg:toolkit");
 
 export class CyclicDepsDector<T> {
@@ -49,7 +48,7 @@ export class CyclicDepsDector<T> {
 
 
 export class MismatchError extends Error {
-	constructor(expected: Object, actual: IToken) {
+	constructor(expected: Object, actual: Object) {
 		let err_msg;
 		if (isIterable(expected)) {
 			let expectation = "";

@@ -1,14 +1,14 @@
 /*
 Nonrecursive LL Predictive Parsing
 */
-import { EOF, NIL, ASTree, ASTElement } from "../common/definition";
-import { Terminal, NonTerminal, Production, Symbol, IGrammar, IParser, ActionGrammar } from "./definition";
-import { ILexer } from "../common/definition";
-import {  Stack } from "../common/shim";
+import { EOF, NIL, ASTree, ASTElement } from "../../common/definition";
+import { Terminal, NonTerminal, Production, Symbol, IGrammar, IParser, ActionGrammar } from "../definition";
+import { ILexer } from "../../common/definition";
+import {  Stack } from "../../common/shim";
 import rootDebug from "debug";
-import { FirstTable, FirstSetCalculator } from "./first";
-import { FollowSetTable, FollowSetCalculator } from "./follow";
-import { MismatchError } from "./toolkit";
+import { FirstTable, FirstSetCalculator } from "../first";
+import { FollowSetTable, FollowSetCalculator } from "../follow";
+import { MismatchError } from "../toolkit";
 let debug = rootDebug("APP:LLParser");
 
 type ASTAccumulationEntry = { astNode: ASTree, accNum: number }

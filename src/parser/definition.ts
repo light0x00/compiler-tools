@@ -1,5 +1,5 @@
 import { IToken } from "../common/definition";
-import { Terminal } from "../parser-generator/definition";
+import { Terminal } from "../parser-gen/definition";
 export enum Tag {
 	Nil = "Nil",
 	EOF = "EOF",
