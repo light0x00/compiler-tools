@@ -1,7 +1,6 @@
 {
 	"env": {},
 	"presets": [
-		//https://babeljs.io/docs/en/next/babel-preset-env.html
 		[
 			"@babel/env",
 			{
@@ -13,7 +12,6 @@
 				"debug": false
 			}
 		],
-		//https://www.babeljs.cn/docs/babel-preset-typescript
 		[
 			"@babel/preset-typescript",
 			{
@@ -26,7 +24,19 @@
 		"@babel/proposal-class-properties",
 		"@babel/proposal-object-rest-spread",
 		"@babel/plugin-proposal-optional-chaining",
-		"@babel/plugin-transform-named-capturing-groups-regex"
+		"@babel/plugin-transform-named-capturing-groups-regex",
+		[
+			"module-resolver",
+			{
+				"root": [
+					"./"
+				],
+				"alias": {
+					"@": "./src",
+					"test": "./test"
+				}
+			}
+		]
 	],
 	"sourceMaps": "inline"
 }

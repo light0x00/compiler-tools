@@ -2,9 +2,9 @@ os: linux
 language: node_js
 node_js:
   - "8"
-install: npm install
+install: yarn
 scripts:
-  - npm run test
+  - yarn workspace parser-gen run test
 notifications:
   email:
     recipients:

@@ -7,33 +7,13 @@
 	"author": "",
 	"license": "MIT",
 	"scripts": {
-		"lint": "eslint src/**/*.ts test/**/*.ts",
-		"lint:fix": "npm run lint -- --fix",
-		"type-check": "tsc --noEmit",
-		"type-check:watch": "npm run type-check -- --watch",
-		"build:types": "tsc --emitDeclarationOnly",
-		"//babel": "🤪babel-cli has too many configurations, so let it stand alone",
-		"babel": "babel --extensions \".ts\" --copy-files",
-		"build:js": "npm run babel -- src --out-dir dist/src && npm run babel -- test --out-dir dist/test",
-		"build": "npm run build:types && npm run build:js",
-		"//build:watch": "🤐for debug,babel-node does not support debugging",
-		"build:watch": "npm run build:js -- --watch",
-		"pretest": "npm run build",
-		"test": "cross-env DEBUG=APP:* mocha --harmony --require module-alias/register --file dist/test/*.js"
+		"lint": "eslint packages/**/test/**/*.ts",
+		"lint:fix": "yarn run lint -- --fix"
 	},
-	"_moduleAliases": {
-		"@": "dist/src",
-		"test": "dist/test"
-	},
-	"pre-commit": [
-		"echo 'pre-commit'"
+	"private": true,
+	"workspaces": [
+		"packages/*"
 	],
-	"dependencies": {
-		"debug": "^4.1.1",
-		"lodash": "^4.17.15",
-		"module-alias": "^2.2.2",
-		"named-regexp-groups": "^1.0.5"
-	},
 	"devDependencies": {
 		"@babel/cli": "^7.7.4",
 		"@babel/core": "^7.7.4",
@@ -52,6 +32,7 @@
 		"@types/node": "^12.11.6",
 		"@typescript-eslint/eslint-plugin": "^2.9.0",
 		"@typescript-eslint/parser": "^2.9.0",
+		"babel-plugin-module-resolver": "^3.2.0",
 		"codecov": "^3.6.1",
 		"cross-env": "^6.0.3",
 		"eslint": "^6.7.1",
