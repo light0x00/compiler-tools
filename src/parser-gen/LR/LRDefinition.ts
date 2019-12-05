@@ -1,7 +1,7 @@
 
 import { Production, Terminal, Symbol, NonTerminal, ActionGrammar, RawActionGrammar } from "../definition";
 import { addAll_Set, assert } from "@/common/shim";
-import { ILexer } from "@/common/definition";
+import { ILexer, ASTree } from "@/common/definition";
 
 /* 项是所属项集中的一个成员,一个「项」由「产生式」和一个「点」组成,例如 A->a·B */
 export class Item {
@@ -439,7 +439,7 @@ export class ParsingTable {
 }
 
 export interface IParser {
-	parse(lexer: ILexer): void
+	parse(lexer: ILexer): ASTree
 }
 
 export class ProdsInjector {
