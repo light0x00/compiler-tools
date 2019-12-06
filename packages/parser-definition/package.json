@@ -1,0 +1,19 @@
+{
+	"name": "@light0x00/parser-definition",
+	"version": "0.0.1",
+	"description": "A Parser Generator API Definition",
+	"license": "MIT",
+	"author": "light0x00 <light0x00@163.com>",
+	"main": "lib/index.js",
+	"files": [
+		"lib"
+	],
+	"repository": "https://github.com/light0x00/compiler-tools.git",
+	"scripts": {
+		"build:types": "tsc --emitDeclarationOnly --outDir lib/",
+		"//babel": "🤪babel-cli has too many configurations, so let it stand alone",
+		"babel": "babel --extensions \".ts\" --copy-files --root-mode upward",
+		"build:js": "yarn run babel src --out-dir lib/",
+		"build": "yarn run build:types && npm run build:js"
+	}
+}
