@@ -1,2 +1,4 @@
-!packages/**/src
-!packages/**/test
+dist
+lib
+!packages/*/src
+!packages/*/test

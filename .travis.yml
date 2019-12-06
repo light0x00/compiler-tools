@@ -4,7 +4,8 @@ node_js:
   - "8"
 install: yarn
 scripts:
-  - yarn workspace parser-gen run test
+  - yarn workspace @light0x00/parser-generator run test
+  - yarn workspace @light0x00/parser run test
 notifications:
   email:
     recipients:

@@ -6,9 +6,9 @@
 	"eslint.validate": [
 		"javascript",
 		"typescript",
-		// {
-		// 	"language": "typescript",
-		// 	"autoFix": true
-		// },
 	],
+	"files.exclude": {
+		"**/lib":true,
+		"**/dist":true
+	}
 }

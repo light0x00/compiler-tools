@@ -1,0 +1,15 @@
+{
+	"extends": "../../tsconfig.ts",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"./src/*"
+			],
+			"test/*": [
+				"./test/*"
+			]
+		},
+		"declaration": true
+	}
+}

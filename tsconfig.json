@@ -14,8 +14,8 @@
 		// "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
 		"sourceMap": true, /* Generates corresponding '.map' file. */
 		// "outFile": "./",                       /* Concatenate and emit output to single file. */
-		"outDir": "./dist", /* Redirect output structure to the directory. */
-		"rootDir": "./", /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+		// "outDir": "./dist", /* Redirect output structure to the directory. */
+		// "rootDir": "./", /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
 		// "composite": true,                     /* Enable project compilation */
 		// "removeComments": true,                /* Do not emit comments to output. */
 		// "noEmit": true,                        /* Do not emit outputs. */
@@ -44,15 +44,15 @@
 				"src/*"
 			],
 			"test/*": [
-				"packages/parser-gen/test/*"
+				"test/*"
 			],
 		}, /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
 		// "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
 		/* 在使用 ts-node时,自定义的类型定义文件必须指定路径才能生效. https://github.com/TypeStrong/ts-node#help-my-types-are-missing*/
-		"typeRoots": [
-			"./types",
-			"./node_modules/@types"
-		], /* List of folders to include type definitions from. */
+		// "typeRoots": [
+		// 	"./types",
+		// 	"./node_modules/@types"
+		// ], /* List of folders to include type definitions from. */
 		// "types": [], /* Type declaration files to be included in compilation. */
 		/* 用esm方式导入commonjs模块时,做default兼容 */
 		"allowSyntheticDefaultImports": true,  /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */

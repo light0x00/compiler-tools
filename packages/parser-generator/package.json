@@ -1,0 +1,45 @@
+{
+	"name": "@light0x00/parser-generator",
+	"version": "0.0.1",
+	"description": "A Parser Generator",
+	"license": "MIT",
+	"author": "light0x00 <light0x00@163.com>",
+	"main": "lib/index.js",
+	"files": [
+		"lib"
+	],
+	"scripts": {
+		"//babel": "🤪babel-cli has too many configurations, so let it stand alone",
+		"babel": "babel --extensions \".ts\" --copy-files --root-mode upward",
+		"prebuild": "rimraf rm lib",
+		"build:types": "tsc --emitDeclarationOnly --rootDir src --outDir lib -p tsconfig.prod.json",
+		"build:src": "yarn run babel src --out-dir lib",
+		"build": "yarn run build:src && yarn run build:types",
+		"build:watch": "yarn run build:src --watch && yarn run build:types --watch",
+		"prebuild:test": "yarn run rimraf rm dist",
+		"build:test": "yarn run babel -- src --out-dir dist/src && yarn run babel -- test --out-dir dist/test",
+		"pretest": "yarn run build:test",
+		"test": "cross-env DEBUG=APP:* mocha --harmony --file dist/test/*.js"
+	},
+	"dependencies": {
+		"@light0x00/parser-definition": "^0.0.1",
+		"@light0x00/shim": "^0.0.0",
+		"debug": "^4.1.1",
+		"lodash": "^4.17.15",
+		"module-alias": "^2.2.2"
+	},
+	"bundledDependencies": [],
+	"keywords": [
+		"LL",
+		"Parser",
+		"LR",
+		"SLR",
+		"LR1"
+	],
+	"bin": {
+		"pgen": "path/to/cli"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
