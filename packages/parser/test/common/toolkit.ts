@@ -1,5 +1,5 @@
 import { EOF, ILexer, IToken } from "@light0x00/parser-definition";
-import { Word, Tag } from "@/Definition";
+import { Word, Tag } from "@/definition";
 import fs from "fs";
 
 export class MockLexer implements ILexer {

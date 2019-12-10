@@ -1,7 +1,7 @@
 import should from "should";
 import { RegexpTokenizer } from "@/tokenzier";
 import { EOF } from "@light0x00/parser-definition";
-import { getMock } from "./common/Toolkit";
+import { getMock } from "./common/toolkit";
 import path from "path";
 import rootDebug from "debug";
 let debug = rootDebug("APP:test");
