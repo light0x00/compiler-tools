@@ -12,13 +12,16 @@
 		"build": "lerna run --stream --sort build",
 		"version": "lerna version --conventional-commits"
 	},
-	"pre-commit": [
-		"lint"
-	],
 	"husky": {
 		"hooks": {
+			"pre-commit": [
+				"lint-staged"
+			],
 			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
 		}
+	},
+	"lint-staged": {
+		"packages/*/src/**/*.ts": "eslint"
 	},
 	"private": true,
 	"workspaces": [
