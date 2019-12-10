@@ -1,5 +1,5 @@
 import { IToken, EOF, ILexer } from "@light0x00/parser-definition";
-import { Word, Num, Tag, Single } from "@/Definition";
+import { Word, Num, Tag, Single } from "@/definition";
 import rootDebug from "debug";
 import { Queue, assert } from "@light0x00/shim";
 import { cloneDeep } from "lodash";
