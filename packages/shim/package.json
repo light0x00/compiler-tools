@@ -10,7 +10,7 @@
 		"babel": "babel --extensions \".ts\" --copy-files --root-mode upward",
 		"build:types": "tsc --emitDeclarationOnly --rootDir src --outDir lib",
 		"build:src": "yarn run babel src --out-dir lib",
-		"build": "yarn run build:src && yarn run build:types"
+		"build": "yarn rimraf rm lib && yarn run build:src && yarn run build:types"
 	},
 	"files": [
 		"lib"

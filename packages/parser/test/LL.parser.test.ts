@@ -1,7 +1,7 @@
 import { buildLLParser } from "@light0x00/parser-generator/lib/LL/Parser";
 import { NIL, ASTList } from "@light0x00/parser-definition";
 import { NonTerminal, ActionGrammar } from "@light0x00/parser-generator/lib/Definition";
-import { Tag, Num, Single, Token } from "@/Definition";
+import { Tag, Num, Single, Token } from "@/definition";
 import { RegexpTokenizer } from "@/Tokenzier";
 import debug from "debug";
 import should from "should";

@@ -9,14 +9,13 @@
 		"lib"
 	],
 	"scripts": {
-		"clean": "yarn run rimraf rm dist && yarn run rimraf rm lib",
 		"//babel": "🤪babel-cli has too many configurations, so let it stand alone",
 		"babel": "babel --extensions \".ts\" --copy-files --root-mode upward",
 		"build:types": "tsc --emitDeclarationOnly --rootDir src --outDir lib -p tsconfig.prod.json",
 		"build:src": "yarn run babel src --out-dir lib",
-		"build": "yarn run clean && yarn run build:src && yarn run build:types",
+		"build": "yarn rimraf rm lib && yarn run build:src && yarn run build:types",
 		"build:watch": "yarn run build:src --watch && yarn run build:types --watch",
-		"pretest": "yarn run clean && yarn run babel -- src --out-dir dist/src && yarn run babel -- test --out-dir dist/test",
+		"pretest": "yarn rimraf rm dist && yarn run babel -- src --out-dir dist/src && yarn run babel -- test --out-dir dist/test",
 		"test": "nyc cross-env DEBUG=APP:* mocha --harmony --file dist/test/*.js",
 		"posttest": "nyc report --reporter=json"
 	},
