@@ -1,9 +1,9 @@
 import { NonTerminal, TerminalTrait } from "@light0x00/parser-generator/lib/Definition";
 import { AugmentedGrammar } from "@light0x00/parser-generator/lib/LR/Definition";
-import { Tag, Num, Single } from "@/Definition";
 import { buildLR1Parser, buildSLRParser } from "@light0x00/parser-generator/lib/LR/ParserBuilder";
-import { RegexpTokenizer } from "@/Tokenzier";
 import { ASTList } from "@light0x00/parser-definition";
+import { Tag, Num, Single } from "@/definition";
+import { RegexpTokenizer } from "@/tokenzier";
 import should from "should";
 
 class Expr extends ASTList {
