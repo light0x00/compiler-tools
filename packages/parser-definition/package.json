@@ -1,6 +1,6 @@
 {
 	"name": "@light0x00/parser-definition",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "A Parser Generator API Definition",
 	"license": "MIT",
 	"author": "light0x00 <light0x00@163.com>",
@@ -13,7 +13,7 @@
 		"build:types": "tsc --emitDeclarationOnly --rootDir src --outDir lib",
 		"babel": "babel --extensions \".ts\" --copy-files --root-mode upward",
 		"build:js": "yarn run babel src --out-dir lib/",
-		"prebuild":"npx rimraf rm lib",
+		"prebuild": "npx rimraf rm lib",
 		"build": "yarn run build:types && npm run build:js"
 	}
 }

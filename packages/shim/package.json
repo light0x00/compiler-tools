@@ -1,6 +1,6 @@
 {
 	"name": "@light0x00/shim",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "",
 	"license": "MIT",
 	"author": "light0x00 <light0x00@163.com>",
@@ -8,9 +8,9 @@
 	"repository": "https://github.com/light0x00/compiler-tools.git",
 	"scripts": {
 		"babel": "babel --extensions \".ts\" --copy-files --root-mode upward",
-		"build:types":"tsc --emitDeclarationOnly --rootDir src --outDir lib",
+		"build:types": "tsc --emitDeclarationOnly --rootDir src --outDir lib",
 		"build:src": "yarn run babel src --out-dir lib",
-		"build":"yarn run build:src && yarn run build:types"
+		"build": "yarn run build:src && yarn run build:types"
 	},
 	"files": [
 		"lib"
