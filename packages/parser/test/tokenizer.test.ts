@@ -1,5 +1,5 @@
 import should from "should";
-import { RegexpTokenizer } from "@/Tokenzier";
+import { RegexpTokenizer } from "@/tokenzier";
 import { EOF } from "@light0x00/parser-definition";
 import { getMock } from "./common/Toolkit";
 import path from "path";
