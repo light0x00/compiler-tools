@@ -12,7 +12,7 @@
 		"pretest": "yarn run rimraf rm dist && yarn run babel src --out-dir dist/src && yarn run babel test --out-dir dist/test",
 		"test": "nyc cross-env DEBUG=APP:* mocha --harmony --file dist/test/*.js",
 		"posttest": "nyc report --reporter=json",
-		"build": "skip build"
+		"build": "echo 'skip build'"
 	},
 	"dependencies": {
 		"@light0x00/parser-definition": "^0.0.2",
