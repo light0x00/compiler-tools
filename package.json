@@ -8,7 +8,17 @@
 	"license": "MIT",
 	"scripts": {
 		"lint": "eslint packages/**/test/**/*.ts",
-		"lint:fix": "yarn run lint -- --fix"
+		"lint:fix": "yarn run lint -- --fix",
+		"build": "lerna run --stream --sort build",
+		"version": "lerna version --conventional-commits"
+	},
+	"pre-commit": [
+		"lint"
+	],
+	"husky": {
+		"hooks": {
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+		}
 	},
 	"private": true,
 	"workspaces": [
@@ -26,6 +36,8 @@
 		"@babel/preset-env": "^7.7.4",
 		"@babel/preset-typescript": "^7.7.4",
 		"@babel/register": "^7.7.4",
+		"@commitlint/cli": "^8.2.0",
+		"@commitlint/config-conventional": "^8.2.0",
 		"@types/debug": "^4.1.5",
 		"@types/lodash": "^4.14.144",
 		"@types/mocha": "^5.2.7",
@@ -38,7 +50,11 @@
 		"cross-env": "^6.0.3",
 		"eslint": "^6.7.1",
 		"force-unpublish": "^1.0.2",
+		"husky": "^3.1.0",
+		"lerna": "^3.19.0",
+		"lint-staged": "^9.5.0",
 		"mocha": "^6.2.2",
+		"nyc": "12.0.1",
 		"pre-commit": "^1.2.2",
 		"rimraf": "^3.0.0",
 		"should": "^13.2.3",

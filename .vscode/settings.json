@@ -9,6 +9,6 @@
 	],
 	"files.exclude": {
 		"**/lib":false,
-		"**/dist":true
+		"**/dist":false
 	}
 }

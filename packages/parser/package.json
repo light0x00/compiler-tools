@@ -9,9 +9,10 @@
 	"repository": "https://github.com/light0x00/compiler-tools.git",
 	"scripts": {
 		"babel": "babel --extensions \".ts\" --copy-files --root-mode upward",
-		"prebuild:test": "npx rimraf rm dist",
-		"build:test": "yarn run babel src --out-dir dist/src && yarn run babel test --out-dir dist/test",
-		"test": "yarn run build:test && cross-env DEBUG=APP:* mocha --harmony --file dist/test/*.js"
+		"pretest": "yarn run rimraf rm dist && yarn run babel src --out-dir dist/src && yarn run babel test --out-dir dist/test",
+		"test": "nyc cross-env DEBUG=APP:* mocha --harmony --file dist/test/*.js",
+		"posttest": "nyc report --reporter=json",
+		"build":"skip build"
 	},
 	"dependencies": {
 		"@light0x00/parser-definition": "^0.0.1",

@@ -3,7 +3,7 @@ import { MismatchError } from "../Toolkit";
 import { Stack } from "@light0x00/shim";
 import { ILexer, ASTElement, IToken, ASTree } from "@light0x00/parser-definition";
 import { IParser, NonTerminal } from "@/Definition";
-import { State, Shift, Goto, Reduce, Accept, StateSet, ParsingTable } from "./Definition";
+import { State, StateSet, ParsingTable } from "./Definition";
 
 import rootDebug from "debug";
 let debug = rootDebug("APP:LR:parser");
