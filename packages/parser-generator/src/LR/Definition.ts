@@ -1,12 +1,12 @@
 
-import { Production, Terminal, Symbol, NonTerminal, ActionGrammar, RawActionGrammar } from "../Definition";
+import { Production, Terminal, Symbol, NonTerminal, ActionGrammar, RawActionGrammar, TraitsTable } from "../Definition";
 import { addAll_Set, assert } from "@light0x00/shim";
 import { ILexer, ASTree } from "@light0x00/parser-definition";
 
 /* 项是所属项集中的一个成员,一个「项」由「产生式」和一个「点」组成,例如 A->a·B */
 export class Item {
 
-	prod: Production;//可以改为使用编号
+	prod: Production;
 	private _dot: number = 0;
 	/*
     由于lookaheadSet可能重复,所以使用Set来存储
@@ -260,7 +260,7 @@ export class StateSet extends Array<State>{
 		}
 		return null;
 	}
-	satrtState() :State{
+	satrtState(): State {
 		assert(this[0] != null);
 		return this[0];
 	}
@@ -284,9 +284,8 @@ export interface AutomataTools {
  */
 export class AugmentedGrammar extends ActionGrammar {
 
-
-	constructor(rawGrammar: RawActionGrammar) {
-		super(rawGrammar);
+	constructor(rawGrammar: RawActionGrammar, traits: TraitsTable) {
+		super(rawGrammar, traits);
 	}
 
 	afterConstruct() {
@@ -294,7 +293,7 @@ export class AugmentedGrammar extends ActionGrammar {
 			"The start symbol of an augmented grammar has one and only one production, and the production contains only one symbol!");
 	}
 	/* 开始符号的产生式 原则上只能有一个 */
-	get prodOfStartNT() {
+	get prodOfStartNT(): Production {
 		return this.startNT()[0];
 	}
 }
@@ -303,49 +302,40 @@ export class AugmentedGrammar extends ActionGrammar {
 export abstract class Operation {
 	abstract equals(obj: Object): boolean
 
-	isReduce() {
+	isReduce(): this is Reduce {
 		return false;
 	}
-	isShift() {
-		return false;
-	}
-
-	isGoto() {
+	isShift(): this is Shift {
 		return false;
 	}
 
-	isAccept() {
+	isGoto(): this is Goto {
 		return false;
 	}
-}
 
-export class Reduce extends Operation {
-	/* 用于归约的产生式 */
-	prod: Production
-	constructor(prod: Production) {
-		super();
-		this.prod = prod;
-	}
-
-	toString() {
-		return `reduce ${this.prod.id}`;
-	}
-
-	equals(obj: Object) {
-		return obj instanceof Reduce && obj.prod == this.prod;
-	}
-
-	isReduce() {
-		return true;
+	isAccept(): this is Accept {
+		return false;
 	}
 }
 
 export class Shift extends Operation {
 	nextState: State
-	constructor(nextState: State) {
+	prec: number;
+	assoc: boolean;
+	constructor(nextState: State, prec: number = -1, assoc: boolean = false) {
 		super();
 		this.nextState = nextState;
+		this.prec = prec;
+		this.assoc = assoc;
 	}
+
+	setIfLarger(prec: number, assoc: boolean) {
+		if (prec > this.prec) {
+			this.prec = prec;
+			this.assoc = assoc;
+		}
+	}
+
 	toString() {
 		return `shift ${this.nextState.id}`;
 	}
@@ -359,6 +349,7 @@ export class Shift extends Operation {
 
 export class Goto extends Operation {
 	nextState: State
+
 	constructor(nextState: State) {
 		super();
 		this.nextState = nextState;
@@ -375,17 +366,40 @@ export class Goto extends Operation {
 	}
 }
 
-export class Accept extends Operation {
-	nextState: State
-	constructor(nextState: State) {
+export class Reduce extends Operation {
+	/* 用于归约的产生式 */
+	prod: Production;
+	prec: number;
+	leftAssoc: boolean;
+	constructor(prod: Production, prec: number = -1, leftAssoc: boolean = false) {
 		super();
-		this.nextState = nextState;
+		this.prod = prod;
+		this.prec = prec;
+		this.leftAssoc = leftAssoc;
+	}
+
+	toString() {
+		return `reduce ${this.prod.id}`;
+	}
+
+	equals(obj: Object) {
+		return obj instanceof Reduce && obj.prod == this.prod;
+	}
+
+	isReduce() {
+		return true;
+	}
+}
+
+export class Accept extends Operation {
+	constructor() {
+		super();
 	}
 	equals(obj: Object) {
-		return obj instanceof Accept && obj.nextState == this.nextState;
+		return obj instanceof Accept;
 	}
 	toString() {
-		return `accept ${this.nextState.id}`;
+		return `accept`;
 	}
 	isAccept() {
 		return true;

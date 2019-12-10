@@ -29,17 +29,29 @@ export class NonTerminal extends Array<Production> {
 export class Production extends Array<Symbol> {
 	id: number;
 	name: string;
-	non_terminal: NonTerminal;
+	nonTerminal: NonTerminal;
 	makeAST: ASTMaker;
+	private _precedence: number;
+	private _leftAssociation: boolean;
 	static DefaultMakeAST = () => { throw new Error("No action is provided"); };
-	constructor(id: number, non_terminal: NonTerminal, body: Symbol[], makeAST: ASTMaker = Production.DefaultMakeAST) {
+	constructor(id: number, non_terminal: NonTerminal, body: Symbol[], makeAST: ASTMaker = Production.DefaultMakeAST, precedence: number = 0, leftAssociation: boolean = false) {
 		super(...body);
 		this.id = id;
-		this.non_terminal = non_terminal;
+		this.nonTerminal = non_terminal;
 		this.name = non_terminal.name;
-		if (makeAST != null)
-			this.makeAST = makeAST;
+		this._precedence = precedence;
+		this._leftAssociation = leftAssociation;
+		this.makeAST = makeAST;
 	}
+
+	get leftAssoc() {
+		return this._leftAssociation;
+	}
+
+	get prec() {
+		return this._precedence;
+	}
+
 	/* 是否为空推导 形如 A->𝝴 */
 	isEpsilon() {
 		return this.length == 1 && this[0] == NIL;
@@ -111,13 +123,19 @@ export type RawProduction = {
 	action?: ASTMaker;
 	body: Symbol[];
 };
+
+export type TerminalTrait = { prec: number, leftAssoc: boolean }
+export type TraitsTable = Map<Terminal, TerminalTrait>
+
 export type RawActionGrammar = Array<Array<NonTerminal | RawProduction | ASTMaker>>;
 export class ActionGrammar implements IGrammar {
 	protected prodIdCounter = 0;
 	protected nonTerminals: NonTerminal[] = [];
 	protected productions: Production[] = [];
 	protected productionsMap = new Map<number, Production>();
-	constructor(rawGrammar: RawActionGrammar) {
+	protected traits: TraitsTable;
+	constructor(rawGrammar: RawActionGrammar, traits: TraitsTable = new Map<Terminal, TerminalTrait>()) {
+		this.traits = traits;
 		this.construct(rawGrammar);
 	}
 	protected beforeConstruct(rawGrammar: RawActionGrammar) {
@@ -138,9 +156,12 @@ export class ActionGrammar implements IGrammar {
 				let rawProd = x[i] as RawProduction;
 				assert(x[i] != null && rawProd.body != null);
 				let { body, action } = rawProd;
+				//动作
 				if (action == null && hasDefault)
 					action = x[x.length - 1] as ASTMaker;
-				let prod = new Production(this.prodIdCounter++, nonTerminal, body, action);
+				//优先级、结合方向
+				let { prec, leftAssoc } = this.determineProdTrait(body);
+				let prod = new Production(this.prodIdCounter++, nonTerminal, body, action, prec, leftAssoc);
 				nonTerminal.prods.push(prod);
 				this.productionsMap.set(prod.id, prod);
 				this.productions.push(prod);
@@ -148,6 +169,20 @@ export class ActionGrammar implements IGrammar {
 		}
 		this.afterConstruct();
 	}
+
+	private determineProdTrait(prodBody: Symbol[]): TerminalTrait {
+		let maxTrait: TerminalTrait = { prec: -1, leftAssoc: false };
+		for (let sym of prodBody) {
+			if (this.traits.has(sym)) {
+				let curTrait = this.traits.get(sym)!;
+				if (curTrait.prec >= maxTrait.prec) {
+					maxTrait = curTrait;
+				}
+			}
+		}
+		return maxTrait;
+	}
+
 	protected afterConstruct() {
 		//Implement in subclasses
 	}

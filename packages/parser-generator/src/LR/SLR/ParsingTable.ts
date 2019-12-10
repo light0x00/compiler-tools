@@ -10,5 +10,5 @@ import { NonTerminal, Terminal } from "@/Definition";
  * @param grammar 文法
  */
 export function getParsingTable_SLR(stateSet: StateSet, grammar: AugmentedGrammar, getFollowSet: IFunction<NonTerminal, Set<Terminal>>) {
-	return getParsingTable(stateSet, grammar.startNT(), (item) => getFollowSet(item.prod.non_terminal)!);
+	return getParsingTable(stateSet, grammar.startNT(), (item) => getFollowSet(item.prod.nonTerminal)!);
 }

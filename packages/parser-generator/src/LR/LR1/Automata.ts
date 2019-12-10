@@ -161,7 +161,7 @@ export class LRAutomataTools implements AutomataTools {
 			let expandSym = item.nextSymbol();
 			if (!(expandSym instanceof NonTerminal)) //issue 1.2
 				continue;
-			if (item.prod[0] == item.prod.non_terminal && item.dotPos == 0) { //issue 1.4
+			if (item.prod[0] == item.prod.nonTerminal && item.dotPos == 0) { //issue 1.4
 				debug(`Stop expanding left recursion production ${expandSym}`);
 				continue;
 			}

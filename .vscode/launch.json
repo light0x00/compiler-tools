@@ -32,10 +32,9 @@
 			"type": "node",
 			"request": "launch",
 			"name": "DEBUG-TS",
-			"program": "${workspace}/node_modules/.bin/ts-node",
+			"program": "${workspaceFolder}/node_modules/.bin/ts-node",
 			"args": [
 				"${file}"
-
 			],
 			"runtimeArgs": [
 				"--harmony",
@@ -46,7 +45,7 @@
 			],
 			"env": {
 				"DEBUG": "APP:*",
-				"TS_NODE_PROJECT":"${workspaceFolder}"
+				"TS_NODE_PROJECT": "${input:pickTsConfig}"
 			},
 			"console": "integratedTerminal",
 			"protocol": "inspector",
@@ -66,13 +65,26 @@
 				"ts-node/register",
 				"-r",
 				"tsconfig-paths/register"
-
 			],
 			"env": {
 				"DEBUG": "APP:*",
+				"TS_NODE_PROJECT": "${input:pickTsConfig}"
 			},
 			"console": "integratedTerminal",
 			"protocol": "inspector",
 		},
-	]
+	],
+	//https://code.visualstudio.com/docs/editor/variables-reference#_input-variables
+	"inputs": [
+		{
+			"type": "pickString",
+			"id": "pickTsConfig",
+			"description": "Where is the tsconfig?",
+			"options": [
+			  "packages/parser/tsconfig.json",
+			  "packages/parser-generator/tsconfig.json",
+			],
+			"default": "packages/parser"
+		}
+	],
 }

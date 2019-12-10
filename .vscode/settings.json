@@ -8,7 +8,7 @@
 		"typescript",
 	],
 	"files.exclude": {
-		"**/lib":true,
+		"**/lib":false,
 		"**/dist":true
 	}
 }

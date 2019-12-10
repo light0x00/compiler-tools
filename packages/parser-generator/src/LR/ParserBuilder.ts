@@ -8,6 +8,7 @@ import { getParsingTable_SLR } from "@/LR/SLR/ParsingTable";
 /* LR1 API */
 import { getStateSet_LR } from "@/LR/LR1/Automata";
 import { getParsingTable_LR } from "@/LR/LR1/ParsingTable";
+import { TraitsTable } from "@/Definition";
 
 export function buildSLRParser(grammar: AugmentedGrammar): IParser {
 	//状态自动机
