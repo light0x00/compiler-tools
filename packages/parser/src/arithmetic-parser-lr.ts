@@ -1,16 +1,9 @@
 import { NonTerminal } from "@light0x00/parser-generator/lib/Definition";
 import { AugmentedGrammar } from "@light0x00/parser-generator/lib/LR/Definition";
-import { buildLR1Parser, buildSLRParser } from "@light0x00/parser-generator/lib/LR/ParserBuilder";
 import { Tag, Num, Single } from "@/definition";
-import { RegexpTokenizer } from "@/tokenzier";
 import { ASTList } from "@light0x00/parser-definition";
-import should from "should";
+import { buildLR1Parser, buildSLRParser } from "@light0x00/parser-generator/lib/LR/ParserBuilder";
 
-class Program extends ASTList {
-	eval(): number {
-		return (this.child(0) as Expr).eval();
-	}
-}
 
 class Expr extends ASTList {
 	eval(): number {
@@ -70,7 +63,7 @@ let T = new NonTerminal("T");
 let F = new NonTerminal("F");
 let grammar = new AugmentedGrammar([
 	[S,
-		{ body: [E], action: (e) => new Program(e) }
+		{ body: [E]}
 	],
 	[E,
 		{ body: [E, "+", T] },
@@ -90,32 +83,7 @@ let grammar = new AugmentedGrammar([
 		(e) => new Factor(e)
 	]
 ]);
+let parserSLR = buildSLRParser(grammar);
+let parserLR1 = buildLR1Parser(grammar);
 
-describe("============LR Parser Test============", function () {
-
-	describe(`
-	Grammar
-	S->E
-	E->E+T | E-T | T
-	T->T*F | T/F |F
-	F->(E) | NUM
-	`, function () {
-
-		describe(`SLR Test`, function () {
-			let parser = buildSLRParser(grammar);
-			it(`1+2*3-4/5-(2-1)=5.2`, function () {
-				let ast = parser.parse(new RegexpTokenizer("1+2*3-4/5-(2-1)"));
-				should(ast.eval()).eql(5.2);
-			});
-		});
-
-		describe(`LR1 Test`, function () {
-			let parser = buildLR1Parser(grammar);
-			it(`1+2*3-4/5-(2-1)=5.2`, function () {
-				let ast = parser.parse(new RegexpTokenizer("1+2*3-4/5-(2-1)"));
-				should(ast.eval()).eql(5.2);
-			});
-		});
-
-	});
-});
+export { parserSLR, parserLR1 };

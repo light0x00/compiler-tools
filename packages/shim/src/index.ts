@@ -37,7 +37,10 @@ export class Stack<T> implements Iterable<T>{
 	join(separator?: string): string {
 		return this.arr.join(separator);
 	}
-	
+	map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[] {
+		return this.arr.map(callbackfn, thisArg);
+	}
+
 }
 
 export class Queue<T> implements Iterable<T>{

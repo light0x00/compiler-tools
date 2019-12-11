@@ -319,7 +319,6 @@ export class LRAutomataTools implements AutomataTools {
 	getStartState(grammar: AugmentedGrammar) {
 		return new State(0, this.closure(new ItemSet(new Item(grammar.prodOfStartNT, 0, new Set<Terminal>([EOF])))));
 	}
-
 }
 
 export function getStateSet_LR(grammar: AugmentedGrammar, getFirstSet: FirstSetGetter) {

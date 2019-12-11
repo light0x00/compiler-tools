@@ -53,6 +53,7 @@ export abstract class ASTree {
 		throw new Error("Do not support the evaluate!");
 	}
 }
+
 export abstract class ASTList extends ASTree {
 	protected children: Array<ASTElement>
 	constructor(children?: Array<ASTElement>) {

@@ -7,6 +7,10 @@
 
 https://zellwk.com/blog/publish-to-npm/
 
+lerna updated	查看自上一个发布的版本以后,哪些包产生了更高
+
+lerna version --conventional-commits
+
 lerna publish
 
 ```

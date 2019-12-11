@@ -284,7 +284,7 @@ export interface AutomataTools {
  */
 export class AugmentedGrammar extends ActionGrammar {
 
-	constructor(rawGrammar: RawActionGrammar, traits: TraitsTable) {
+	constructor(rawGrammar: RawActionGrammar, traits?: TraitsTable) {
 		super(rawGrammar, traits);
 	}
 

@@ -17,8 +17,8 @@ export class RegexpTokenizer implements ILexer {
 		{ regexp: /(?<space>\s+)/y, type: TokenType.BLANK },
 		{ regexp: /(?<comment>\/\/[^\n]*)/y, type: TokenType.COMMENT },
 		{ regexp: /(?<word>[A-Z_a-z]\w*)/y, type: TokenType.WORD },
-		{ regexp: /(?<num>(0(?![0-9]))|([1-9]\d*(?!\.)))/y, type: TokenType.NUM },
 		{ regexp: /(?<real>([1-9]\d*\.\d+)|(0\.\d+))/y, type: TokenType.REAL },
+		{ regexp: /(?<num>(0(?![0-9]))|([1-9]\d*(?!\.)))/y, type: TokenType.NUM },
 		{ regexp: /(?<string>"(\\"|\\\\|\\n|\\t|[^"])*")/y, type: TokenType.STRING },
 		{ regexp: /(?<single>.)/y, type: TokenType.SINGLE }
 	]

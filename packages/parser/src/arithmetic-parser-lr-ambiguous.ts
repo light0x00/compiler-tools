@@ -1,10 +1,9 @@
+
 import { NonTerminal, TerminalTrait } from "@light0x00/parser-generator/lib/Definition";
 import { AugmentedGrammar } from "@light0x00/parser-generator/lib/LR/Definition";
 import { buildLR1Parser, buildSLRParser } from "@light0x00/parser-generator/lib/LR/ParserBuilder";
 import { ASTList } from "@light0x00/parser-definition";
 import { Tag, Num, Single } from "@/definition";
-import { RegexpTokenizer } from "@/tokenzier";
-import should from "should";
 
 class Expr extends ASTList {
 	eval(): number {
@@ -53,37 +52,7 @@ let grammar = new AugmentedGrammar([
 	[E, { body: [E, "+", E] }, { body: [E, "-", E] }, { body: [E, "*", E] }, { body: [E, "/", E] }, { body: ["(", E, ")"] }, { body: [Tag.NUM] }, (e) => new Expr(e)]
 ], traits);
 
-describe("============LR Ambiguity Parser Test============", function () {
+let parserLR1 = buildLR1Parser(grammar);
+let parserSLR = buildSLRParser(grammar);
 
-	describe(`
-	Grammar
-	S->E
-	E->E+E | E-E | E*E | E/E | (E) | NUM
-	`, function () {
-
-		describe(`LR1 Ambiguity  Test`, function () {
-			let parser = buildLR1Parser(grammar);
-
-			it(`1+2*3`, function () {
-				let ast = parser.parse(new RegexpTokenizer("1+2*3"));
-				should(ast.eval()).eql(7);
-			});
-			it(`1+2*3-(5-1)/2`, function () {
-				let ast = parser.parse(new RegexpTokenizer("1+2*3-(5-1)/2"));
-				should(ast.eval()).eql(5);
-			});
-		});
-		describe(`SLR Ambiguity Test`, function () {
-			let parser = buildSLRParser(grammar);
-			it(`1+2*3`, function () {
-				let ast = parser.parse(new RegexpTokenizer("1+2*3"));
-				should(ast.eval()).eql(7);
-			});
-			it(`1+2*3-(5-1)/2`, function () {
-				let ast = parser.parse(new RegexpTokenizer("1+2*3-(5-1)/2"));
-				should(ast.eval()).eql(5);
-			});
-
-		});
-	});
-});
+export { parserLR1, parserSLR };

@@ -1,9 +1,9 @@
 /*
 Nonrecursive LL Predictive Parsing
 */
-import { EOF, NIL, ASTree, ASTElement,ILexer } from "@light0x00/parser-definition";
+import { EOF, NIL, ASTree, ASTElement, ILexer } from "@light0x00/parser-definition";
 import { Terminal, NonTerminal, Production, Symbol, IGrammar, IParser, ActionGrammar } from "../Definition";
-import {  Stack } from "@light0x00/shim";
+import { Stack } from "@light0x00/shim";
 import rootDebug from "debug";
 import { FirstTable, FirstSetCalculator } from "../First";
 import { FollowSetTable, FollowSetCalculator } from "../Follow";
@@ -50,6 +50,7 @@ export class LLParser implements IParser {
 		let lookahead = lexer.nextToken();
 		while (symStack.size() > 0) {
 			// debug(symStack.join(" "));
+			// debug("ASTree:"+astAccStack.map(i=>i.astNode).join(""));
 			let symbol = symStack.pop()!;
 			let lookaheadKey = lookahead.tableKey();
 			//非终结符
@@ -80,7 +81,6 @@ export class LLParser implements IParser {
 					//检查当前非终结符是否可推出ε, 并且lookahead存在于followSet
 					if (firstSet.has(NIL) && followSet.has(lookaheadKey)) {
 						//ok
-
 						/* 分析树 */
 						this.accumulate(astAccStack);
 					} else {
