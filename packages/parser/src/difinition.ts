@@ -57,14 +57,15 @@ export abstract class AbstractRegexpTokenizer<T> implements ILexer {
 	private addToken(): boolean {
 		assert(this.hasMore);
 		//determine lexeme and type by TokenPatterns
-		let type;
-		let lexeme;
+		let type: T | undefined;
+		let lexeme: string | undefined;
+		let match: RegExpExecArray | null = null;
 		for (let p of this.patterns) {
 			p.regexp.lastIndex = this.lastIndex;
-			let r = p.regexp.exec(this.text);
-			if (r != null) {
+			match = p.regexp.exec(this.text);
+			if (match != null) {
 				type = p.type;
-				lexeme = r[0];
+				lexeme = match[0];
 
 				this.lastIndex = p.regexp.lastIndex;
 				//reach the end
@@ -73,13 +74,13 @@ export abstract class AbstractRegexpTokenizer<T> implements ILexer {
 				break;
 			}
 		}
-		if (type == undefined || lexeme == undefined) {
+		if (type == undefined || lexeme == undefined || match == null) {
 			this.hasMore = false;
 			return false;
 		}
 		//create token
-		let t = this.createToken(lexeme, type);
-		if (t === undefined) {
+		let t = this.createToken(lexeme, type, match);
+		if (t == undefined) {
 			return false;
 		} else {
 			this.buffer.addLast(t);
@@ -87,6 +88,6 @@ export abstract class AbstractRegexpTokenizer<T> implements ILexer {
 		}
 	}
 
-	protected abstract createToken(lexeme: string, type: T): IToken | undefined
+	protected abstract createToken(lexeme: string, type: T, match: RegExpExecArray): IToken | undefined
 
 }

@@ -12,7 +12,9 @@ export class Stack<T> implements Iterable<T>{
 	}
 	private arr: Array<T>;
 	constructor(...items: T[]) {
-		this.arr = new Array<T>(...items);
+		this.arr = new Array<T>();
+		for (let i of items)
+			this.arr.push(i);
 	}
 	peek(): T {
 		return this.arr[this.arr.length - 1];

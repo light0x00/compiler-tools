@@ -11,4 +11,10 @@ describe("============JSON Parser Test============", function () {
 		console.log(r);
 	});
 
+	it(``, function () {
+		should.throws(function(){
+			parser.parse(new JsonTokenizer(`{"a":123,"b":{"c":"ccc"}`));
+		});
+	});
+
 });

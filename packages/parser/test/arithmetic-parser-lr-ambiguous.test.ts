@@ -1,5 +1,5 @@
 
-import { RegexpTokenizer } from "@/tokenzier";
+import { RegexpTokenizer } from "@/arithmetic-tokenzier";
 import should from "should";
 
 import { parserLR1, parserSLR } from "@/arithmetic-parser-lr-ambiguous";

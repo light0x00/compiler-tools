@@ -1,5 +1,5 @@
 
-import { RegexpTokenizer } from "@/tokenzier";
+import { RegexpTokenizer } from "@/arithmetic-tokenzier";
 import debug from "debug";
 import should from "should";
 import parser from "@/arithmetic-parser-ll";

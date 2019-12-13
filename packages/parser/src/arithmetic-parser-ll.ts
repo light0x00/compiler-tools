@@ -3,7 +3,7 @@ import { NIL, ASTList } from "@light0x00/parser-definition";
 import { NonTerminal, ActionGrammar } from "@light0x00/parser-generator/lib/Definition";
 import { Tag, Num, Single, Token } from "./definition";
 /*
-E -> TE's
+E -> TE'
 E' -> +TE'| -TE' |ε
 T -> FT'
 T' -> *FT'| /FT' |ε

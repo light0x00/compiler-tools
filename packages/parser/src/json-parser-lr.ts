@@ -1,6 +1,6 @@
 import { NonTerminal } from "@light0x00/parser-generator/lib/Definition";
 import { IToken, ASTList, ASTLeaf } from "@light0x00/parser-definition";
-import { AbstractRegexpTokenizer } from "./tokenzier2";
+import { AbstractRegexpTokenizer } from "./difinition";
 import rootDebug from "debug";
 import { buildLR1Parser } from "@light0x00/parser-generator/lib/LR/ParserBuilder";
 import { AugmentedGrammar } from "@light0x00/parser-generator/lib/LR/Definition";
@@ -18,7 +18,7 @@ abstract class Token implements IToken {
 	abstract getValue(): Object;
 }
 
-class WordToken extends Token {
+class Word extends Token {
 	tag: Tag
 	lexeme: string
 	constructor(tag: Tag, lexeme: string) {
@@ -37,16 +37,16 @@ class WordToken extends Token {
 		return this.lexeme;
 	}
 }
-class StringLiteral extends WordToken{
-	constructor( lexeme: string) {
-		super(Tag.STRING,lexeme);
+class StringLiteral extends Word {
+	constructor(lexeme: string) {
+		super(Tag.STRING, lexeme);
 	}
 
 	getValue(): string {
-		return this.lexeme.replace(/^"/,"").replace(/"$/,""); //去掉双引号;
+		return this.lexeme.replace(/^"/, "").replace(/"$/, ""); //去掉双引号;
 	}
 }
-class SingleToken extends Token {
+class Single extends Token {
 	tag: Tag
 	lexeme: string
 	constructor(lexeme: string) {
@@ -66,10 +66,10 @@ class SingleToken extends Token {
 	}
 }
 
-class NumberToken extends Token {
+class NumberLiteral extends Token {
 	tag: Tag
 	lexeme: number
-	constructor(tag: Tag, lexeme: number) {
+	constructor(lexeme: number) {
 		super();
 		this.tag = Tag.NUM;
 		this.lexeme = lexeme;
@@ -96,12 +96,12 @@ export class JsonTokenizer extends AbstractRegexpTokenizer<TokenType> {
 			{ regexp: /(?<space>\s+)/y, type: TokenType.BLANK },
 			{ regexp: /(?<real>([1-9]\d*\.\d+)|(0\.\d+))/y, type: TokenType.NUM },
 			{ regexp: /(?<num>(0(?![0-9]))|([1-9]\d*(?!\.)))/y, type: TokenType.NUM },
-			{ regexp: /(?<string>"(\\"|\\\\|\\n|\\t|[^"])*")/y, type: TokenType.STRING },
+			{ regexp: /"(?<string>(\\"|\\\\|\\n|\\t|[^"])*)"/y, type: TokenType.STRING },
 			{ regexp: /(?<single>.)/y, type: TokenType.SINGLE }
 		]);
 	}
 
-	protected createToken(lexeme: string, type: TokenType): IToken | undefined {
+	protected createToken(lexeme: string, type: TokenType, match: RegExpExecArray): IToken | undefined {
 		this.colNo += lexeme.length;
 		switch (type) {
 			case TokenType.BLANK:
@@ -114,11 +114,11 @@ export class JsonTokenizer extends AbstractRegexpTokenizer<TokenType> {
 				}
 				break;
 			case TokenType.NUM:
-				return new NumberToken(Tag.NUM, Number.parseFloat(lexeme));
+				return new NumberLiteral(Number.parseFloat(lexeme));
 			case TokenType.STRING:
-				return new StringLiteral(lexeme);
+				return new StringLiteral(match!.groups!["string"]);
 			case TokenType.SINGLE:
-				return new SingleToken(lexeme);
+				return new Single(lexeme);
 			default:
 				throw new Error("tokenizer error,unknown token:" + lexeme);
 		}
@@ -165,7 +165,7 @@ class EntryNode extends ASTList {
 
 class KeyNode extends ASTLeaf {
 	eval(): string {
-		return (this.token as WordToken).getValue();
+		return (this.token as Word).getValue();
 	}
 }
 
@@ -196,7 +196,7 @@ let grammar = new AugmentedGrammar([
 	[S, { body: [obj] }],
 	[obj, { body: ["{", entry, "}"] }, (e) => new ObjectNode(e)],
 	[entry, { body: [key, ":", val, ",", entry] }, { body: [key, ":", val] }, (e) => new EntryNode(e)],
-	[key, { body: [Tag.STRING] }, (e) => new KeyNode(e![0] as IToken)],  //fuck!
+	[key, { body: [Tag.STRING] }, (e) => new KeyNode(e![0] as IToken)],
 	[val, { body: [obj] }, { body: [Tag.STRING] }, { body: [Tag.NUM] }, (e) => new ValNode(e)]
 ]);
 
