@@ -8,11 +8,14 @@
 	"command": {
 		"publish": {
 			"ignoreChanges": [
-				"*.md"
+				"**/test/**",
+				"**/*.md"
 			],
 			"verifyAccess": false,
 			"verifyRegistry": false,
-			"message": "chore: publish"
+			"conventionalCommits": true,
+			"message": "chore(release): publish",
+			"loglevel": "debug"
 		}
 	}
 }
