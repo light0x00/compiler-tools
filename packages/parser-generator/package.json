@@ -1,6 +1,6 @@
 {
 	"name": "@light0x00/parser-generator",
-	"version": "0.1.0",
+	"version": "0.0.2",
 	"description": "A Parser Generator",
 	"license": "MIT",
 	"author": "light0x00 <light0x00@163.com>",
@@ -20,8 +20,8 @@
 		"posttest": "nyc report --reporter=json"
 	},
 	"dependencies": {
-		"@light0x00/parser-definition": "^0.1.0",
-		"@light0x00/shim": "^0.1.0",
+		"@light0x00/parser-definition": "^0.0.2",
+		"@light0x00/shim": "^0.0.2",
 		"debug": "^4.1.1",
 		"lodash": "^4.17.15",
 		"module-alias": "^2.2.2"
