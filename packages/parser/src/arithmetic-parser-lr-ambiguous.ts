@@ -3,7 +3,7 @@ import { NonTerminal, TerminalTrait } from "@light0x00/parser-generator/lib/Defi
 import { AugmentedGrammar } from "@light0x00/parser-generator/lib/LR/Definition";
 import { buildLR1Parser, buildSLRParser } from "@light0x00/parser-generator/lib/LR/ParserBuilder";
 import { ASTList } from "@light0x00/parser-definition";
-import { Tag, Num, Single } from "@/definition";
+import { Tag, Num, Single } from "./arithmetic-tokenzier";
 
 class Expr extends ASTList {
 	eval(): number {

@@ -1,6 +1,6 @@
 import { NonTerminal } from "@light0x00/parser-generator/lib/Definition";
 import { AugmentedGrammar } from "@light0x00/parser-generator/lib/LR/Definition";
-import { Tag, Num, Single } from "@/definition";
+import { Tag, Num, Single } from "./arithmetic-tokenzier";
 import { ASTList } from "@light0x00/parser-definition";
 import { buildLR1Parser, buildSLRParser } from "@light0x00/parser-generator/lib/LR/ParserBuilder";
 
