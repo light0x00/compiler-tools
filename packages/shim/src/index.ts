@@ -86,6 +86,12 @@ export class Queue<T> implements Iterable<T>{
 	size(): number {
 		return this.arr.length;
 	}
+	dequeue(): T | undefined {
+		return this.removeFirst();
+	}
+	enqueue(element: T) {
+		this.addLast(element);
+	}
 }
 
 export function addAll_Map(to: Map<any, any>, from: Map<any, any>) {
