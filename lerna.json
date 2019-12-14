@@ -13,7 +13,6 @@
 			],
 			"verifyAccess": false,
 			"verifyRegistry": false,
-			"conventionalCommits": true,
 			"message": "chore(release): publish",
 			"loglevel": "debug"
 		}
