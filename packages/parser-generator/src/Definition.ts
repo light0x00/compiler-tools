@@ -128,6 +128,7 @@ export type TerminalTrait = { prec: number, leftAssoc: boolean }
 export type TraitsTable = Map<Terminal, TerminalTrait>
 
 export type RawActionGrammar = Array<Array<NonTerminal | RawProduction | ASTMaker>>;
+
 export class ActionGrammar implements IGrammar {
 	protected prodIdCounter = 0;
 	protected nonTerminals: NonTerminal[] = [];

@@ -13,7 +13,7 @@
 		"build:types": "tsc --emitDeclarationOnly --rootDir src --outDir lib",
 		"babel": "babel --extensions \".ts\" --copy-files --root-mode upward",
 		"build:js": "yarn run babel src --out-dir lib/",
-		"prebuild": "npx rimraf rm lib",
+		"prebuild": "rimraf rm lib",
 		"build": "yarn run build:types && npm run build:js"
 	}
 }
