@@ -14,8 +14,6 @@ notifications:
     email:
         recipients:
             - light0x00@163.com
-        on_success: change
-on_failure: always
 env:
     global:
         secure: P/9w0V1Ihn0jPZ5l5iM3P41VXtXwfUAd0pZwhuJdoX8UdgZpdD11xYomw3sBEPAd1fyuuBk3rzlvS7WTWvVsODMOa/pEXkZOJUl7gLUOHS5315VVNakORgiQDJYNykAUAur/2B7q256BlWUCpIcStMGI7UC/tNkmAzhsZnM6RyMI7JcwGtku+hMgCEdACGP1SDbBN4S+LSikd8ZfL3Q54APuDTQzuJmHlR2dwtATNcgbNf76QDrJL90hxhoEil6uORYMKmpiKPBMnCJeTu5s9gcuC+F34yQGqTBDR33kQc5rVb0/68RPnadhhu2BBDk9MBSN3D+spkXGTAvAirTnPAm3KGkaoGzGa8+8J5CTl2b2582qoMukh1kSOtmeJcWJobc5geCqN6VpDqj6VJN/KFm7Uts1Jv/b8W0gxu7YHdYXIpMYEznQrNB8tBAK6H2EHwpHwhBEc1VqdlJvJQAIvfIN8Q6u3NLZXnH0ZsBHxaQx7omGNFaGakfAF0T877AhPveMrErvg2BUxSl13a8BuFPj6qf39UUlJyN2jM4QtV/eGGI763beOfaTxaAUHPdHAp+uy0CHM5s8KrzhIiU9hdXLAe/EHs0vleJmJ/nAB07swzNVI989MaZ+0KsemE24mKzBKWjxDBMGDOTd/cLaIy4W4esw0hWkgEIN7WQO8is=
